@@ -1,2 +1,2 @@
 # IndexTrendNet
-ANN and LSTM for Multi-Index Price Direction Forecasting.
+Neural networks based Multi-Index Price Direction Forecasting approach.
