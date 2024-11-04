@@ -1,0 +1,69 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stock Prediction App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Welcome to the Stock Prediction App</h1>
+        <form action="{{ url_for('select_ticker') }}" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="ticker">Select a ticker based on country:</label>
+                <select name="ticker" id="ticker" class="form-control">
+                    {% for ticker, country in tickers.items() %}
+                        <option value="{{ ticker }}">{{ country }} - {{ ticker }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">View Performance</button>
+        </form>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Model Performance Analysis</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Welcome to the Model Performance Analysis</h1>
+        <p class="lead mt-4">
+            This application provides a comprehensive analysis of a machine learning model's performance in classifying data into two categories: Negative and Positive.
+            Below are the metrics you can expect to see:
+        </p>
+        
+        <ul class="list-group mt-3">
+            <li class="list-group-item">
+                <strong>Confusion Matrix:</strong> A heatmap visualization that shows the number of correct and incorrect predictions categorized by actual and predicted values.
+            </li>
+            <li class="list-group-item">
+                <strong>Classification Report:</strong> Detailed performance metrics like precision, recall, and F1-score for each category, along with overall accuracy.
+            </li>
+            <li class="list-group-item">
+                <strong>Actual vs Predicted - Stacked Bar Chart:</strong> A stacked bar chart that displays the distribution of actual and predicted counts for each category.
+            </li>
+        </ul>
+
+        <p class="mt-4">
+            Select a ticker from the dropdown below to proceed to the performance analysis.
+        </p>
+
+        <!-- Form to select a ticker and redirect to the performance page -->
+        <form action="{{ url_for('select_ticker') }}" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="ticker">Select a ticker:</label>
+                <select name="ticker" id="ticker" class="form-control">
+                    {% for ticker, country in tickers.items() %}
+                        <option value="{{ ticker }}">{{ country }} - {{ ticker }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">View Performance</button>
+        </form>
+    </div>
+</body>
+</html>

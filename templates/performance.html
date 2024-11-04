@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Performance Metrics</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <a href="/" class="btn btn-secondary mb-4">Back to Home</a>
+        <h1 class="text-center">Performance for {{ ticker }}</h1>
+
+        <!-- Separate container for the heatmap -->
+        <div class="card mt-4 mb-5">
+            <div class="card-body">
+                <h4>Confusion Matrix</h4>
+                <div id="heatmap" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- Main container for classification report and bar chart -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4>Classification Report</h4>
+                <pre>{{ results['classification_report'] | tojson(indent=2) | safe }}</pre>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h4>Actual vs Predicted - Stacked Bar Chart</h4>
+                <div id="stacked_bar_chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Confusion matrix data for heatmap
+        var heatmapData = {
+            z: JSON.parse("{{ results['confusion_matrix'] | tojson }}"),
+            x: ['Negative', 'Positive'],
+            y: ['Negative', 'Positive'],
+            type: 'heatmap',
+            colorscale: 'Viridis'
+        };
+
+        var heatmapLayout = {
+            title: 'Confusion Matrix',
+            xaxis: { title: 'Predicted' },
+            yaxis: { title: 'Actual' }
+        };
+
+        // Render the heatmap for the confusion matrix
+        Plotly.newPlot('heatmap', [heatmapData], heatmapLayout);
+
+        // Data for Stacked Bar Chart
+        var yTest = JSON.parse("{{ results['y_test'] | tojson }}");
+        var yPred = JSON.parse("{{ results['y_pred'] | tojson }}").flat();
+
+        // Calculate counts for each category (0 and 1) in yTest and yPred
+        var actualCounts = [yTest.filter(value => value === 0).length, yTest.filter(value => value === 1).length];
+        var predictedCounts = [yPred.filter(value => value === 0).length, yPred.filter(value => value === 1).length];
+
+        var barChartData = [
+            {
+                x: ['Negative', 'Positive'],
+                y: actualCounts,
+                name: 'Actual',
+                type: 'bar'
+            },
+            {
+                x: ['Negative', 'Positive'],
+                y: predictedCounts,
+                name: 'Predicted',
+                type: 'bar'
+            }
+        ];
+
+        var barChartLayout = {
+            title: 'Actual vs Predicted - Stacked Bar Chart',
+            xaxis: { title: 'Category' },
+            yaxis: { title: 'Count' },
+            barmode: 'stack'
+        };
+
+        // Render the stacked bar chart
+        Plotly.newPlot('stacked_bar_chart', barChartData, barChartLayout);
+    </script>
+</body>
+</html>
