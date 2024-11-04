@@ -1,0 +1,15 @@
+{
+    "000001.SS": "china",
+    "^HSI": "hong_kong",
+    "^BSESN": "india",
+    "^JKSE": "indonesia",
+    "^N225": "japan",
+    "^KLSE": "malaysia",
+    "^TWII": "taiwan",
+    "^SET.BK": "thailand",
+    "^AXJO": "austalia",
+    "^STI": "singapore",
+    "^FCHI": "france",
+    "^GDAXI": "germany",
+    "^FTSE": "united_kingdom"
+}
