@@ -1,0 +1,7 @@
+Flask
+yfinance
+loguru
+joblib
+tensorflow
+scikit-learn
+pandas
