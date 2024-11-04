@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -24,4 +25,20 @@ jobs:
 
       - name: Run Analysis Script
         run: |
-          python app.py
+          python app.py  # Replace with your actual analysis command
+
+      # Commit and push any changes in the 'results' folder back to the repository
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push new results
+        run: |
+          git add results/
+          git commit -m "Update results from daily analysis"
+          git push
+        env:
+          # This is necessary to authenticate the push using GitHub's token
+          # which is automatically available in Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
