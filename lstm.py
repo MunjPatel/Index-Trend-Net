@@ -1,81 +1,3 @@
-# import pandas as pd
-# import numpy as np
-# import os
-# import joblib
-# import json
-
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-# from dataclasses import dataclass
-# from preprocessing import logger, preprocess_main
-# from tensorflow.keras import Sequential
-# from tensorflow.keras.layers import Dense, LSTM, Dropout, Conv1D, MaxPooling1D, Flatten
-# from tensorflow.keras.callbacks import EarlyStopping
-
-# @dataclass
-# class ANNClassifier:
-    
-#     ticker  : str
-#     x_train : np.array
-#     x_test  : np.array
-#     y_train : pd.DataFrame
-#     y_test  : pd.DataFrame
-
-#     def save_model(self, model):
-#         model_path = f"./models/{self.ticker}.pkl"
-#         os.makedirs(os.path.dirname(model_path), exist_ok=True)
-#         joblib.dump(model, model_path)
-#         print(f"Model saved for ticker: {self.ticker}")
-        
-#     def _train(self):
-        
-#         ann_model = Sequential()
-        
-#         ann_model.add(Dense(100, input_dim = self.x_train.shape[1], activation = 'relu'))
-#         ann_model.add(Dropout(0.6))
-#         ann_model.add(Dense(50, activation = 'relu'))
-#         ann_model.add(Dropout(0.6))
-#         ann_model.add(Dense(25, activation = 'relu'))
-#         ann_model.add(Dropout(0.6))
-#         ann_model.add(Dense(1, activation = 'sigmoid'))
-        
-#         ann_model.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])
-        
-#         ann_history = ann_model.fit(self.x_train, self.y_train, epochs = 100, batch_size = 32, validation_split = 0.2, callbacks = [EarlyStopping(monitor = 'val_loss', patience = 5)], verbose = 1)
-#         ann_metrics = pd.DataFrame(ann_history.history)
-#         self.save_model(ann_model)
-#         return ann_model, ann_metrics
-    
-#     def _test(self, ann_model, x_test, y_test):
-#         y_predicted = ann_model.predict(x_test)
-#         y_pred = np.where(y_predicted > 0.99, 1, 0) # Give 1 to only those values which have probability > 99%.
-#         forecast_accuracy = accuracy_score(y_true=y_test, y_pred=y_pred)
-#         return forecast_accuracy, confusion_matrix(y_test, y_pred), classification_report(y_test, y_pred)
-    
-# if __name__ == "__main__":
-
-#     # with open("tickers.json", 'r') as tickers_syms:
-#     #     tickers = json.loads(tickers_syms)
-
-#     x_train, x_test, y_train, y_test = preprocess_main("AAPL")
-#     classifier = ANNClassifier(
-#     ticker="AAPL",
-#     x_train=x_train,
-#     x_test=x_test,
-#     y_train=y_train,
-#     y_test=y_test
-#     )
-#     # Train the model
-#     ann_model, ann_metrics = classifier._train()
-
-#     # Test the model
-#     forecast_accuracy, conf_matrix, class_report = classifier._test(ann_model, x_test, y_test)
-
-#     # Print the results
-#     print("Forecast Accuracy:", forecast_accuracy)
-#     print("Confusion Matrix:\n", conf_matrix)
-#     print("Classification Report:\n", class_report)
-
 import pandas as pd
 import numpy as np
 import os
@@ -98,11 +20,11 @@ class LSTMClassifier:
     y_train : pd.DataFrame
     y_test  : pd.DataFrame
 
-    def save_model(self, model):
-        model_path = f"./models/{self.ticker}.pkl"
-        os.makedirs(os.path.dirname(model_path), exist_ok=True)
-        joblib.dump(model, model_path)
-        print(f"Model saved for ticker: {self.ticker}")
+    # def save_model(self, model):
+    #     model_path = f"./models/{self.ticker}.pkl"
+    #     os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    #     joblib.dump(model, model_path)
+    #     print(f"Model saved for ticker: {self.ticker}")
         
     def save_results(self, forecast_accuracy, conf_matrix, class_report, y_test, y_pred):
         results = {
@@ -121,7 +43,7 @@ class LSTMClassifier:
     def _train(self):
         # Reshape input to 3D for LSTM [samples, timesteps, features]
         x_train_reshaped = self.x_train.reshape((self.x_train.shape[0], 1, self.x_train.shape[1]))
-        x_test_reshaped = self.x_test.reshape((self.x_test.shape[0], 1, self.x_test.shape[1]))
+        # x_test_reshaped = self.x_test.reshape((self.x_test.shape[0], 1, self.x_test.shape[1]))
         
         lstm_model = Sequential()
         lstm_model.add(LSTM(100, input_shape=(x_train_reshaped.shape[1], x_train_reshaped.shape[2]), activation='relu', return_sequences=True))
@@ -139,7 +61,7 @@ class LSTMClassifier:
             validation_split=0.2, callbacks=[EarlyStopping(monitor='val_loss', patience=5)], verbose=1
         )
         lstm_metrics = pd.DataFrame(lstm_history.history)
-        self.save_model(lstm_model)
+        # self.save_model(lstm_model)
         return lstm_model, lstm_metrics
     
     def _test(self, lstm_model):
