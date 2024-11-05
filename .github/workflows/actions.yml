@@ -7,6 +7,9 @@ on:
   # schedule:
     # # Runs every day at 5:00 PM UTC (which is after the UK market close at 4:30 PM UTC)
     # - cron: '0 17 * * *'
+  
+permissions:
+  contents: write
 
 jobs:
   run_daily_analysis:
