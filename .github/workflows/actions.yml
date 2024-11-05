@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Analysis Script
         run: |
-          python app.py  # Replace with your actual analysis command
+          python lstm.py
 
       # Commit and push any changes in the 'results' folder back to the repository
       - name: Configure Git
