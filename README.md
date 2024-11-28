@@ -1,6 +1,6 @@
-# Index-Trend-Net
+# LSTM-FinTrends
 
-Index-Trend-Net is an end-to-end project that forecasts the directional movement of stock indices based on derived metrics using an LSTM (Long Short-Term Memory) deep learning model. The goal is not to create a live application but to demonstrate a complete workflow from data preprocessing to model prediction, data storage, and visualization. The project includes key technologies like LSTM for forecasting, data collection using yfinance, a Flask web app for rendering results, and process automation using GitHub Actions.
+LSTM-FinTrends is an end-to-end project that forecasts the directional movement of stock indices based on derived metrics using an LSTM (Long Short-Term Memory) deep learning model. The goal is not to create a live application but to demonstrate a complete workflow from data preprocessing to model prediction, data storage, and visualization. The project includes key technologies like LSTM for forecasting, data collection using yfinance, a Flask web app for rendering results, and process automation using GitHub Actions.
 
 ## Project Overview
 
@@ -55,8 +55,8 @@ To run this project locally:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/MunjPatel/Index-Trend-Net.git
-   cd Index-Trend-Net
+   git clone https://github.com/MunjPatel/LSTM-FinTrends.git
+   cd LSTM-FinTrends
    ```
 2. **Install Requirements**:
    ```bash
